@@ -6,6 +6,18 @@ import Card from "./Card";
 const HarryPotter = () => {
   const [characters, setCharacters] = useState([]);
   const [sortedHouse, setSortedHouse] = useState([]);
+  const [prev, setPrev] = useState(0);
+  const [next, setNext] = useState(8);
+  const prevCharacters = () => {
+    if (prev !== 0) {
+      setPrev(prev - 8);
+      setNext(next - 8);
+    }
+  };
+  const nextCharacters = () => {
+    setPrev(prev + 8);
+    setNext(next + 8);
+  };
 
   useEffect(() => {
     axios
@@ -21,10 +33,16 @@ const HarryPotter = () => {
     <div className="api">
       <Navigation />
       <ul className="api-list">
-        {characters.map((character) => (
+        {characters.slice(prev, next).map((character) => (
           <Card character={character} key={character.name} />
         ))}
       </ul>
+      <button type="button" onClick={prevCharacters}>
+        précédent
+      </button>
+      <button type="button" onClick={nextCharacters}>
+        suivant
+      </button>
     </div>
   );
 };
