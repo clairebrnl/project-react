@@ -28,12 +28,23 @@ const HarryPotter = () => {
       })
       .catch((err) => console.log(err));
   }, []);
-
+  const onChangeValue = (e) => {
+    setSortedHouse(e.target.value);
+  }
   return (
     <div className="api">
       <Navigation />
+      <div onChange={onChangeValue}>
+        <input type="radio" value="Gryffindor" name="Hogwards' Houses"/>
+        <input type="radio" value="Slytherin" name="Hogwards' Houses"/>
+        <input type="radio" value="Hufflepuff" name="Hogwards' Houses"/>
+        <input type="radio" value="Ravenclaw" name="Hogwards' Houses"/>
+      </div>
       <ul className="api-list">
-        {characters.slice(prev, next).map((character) => (
+        {characters
+        .filter((character) => character.house.includes(sortedHouse))
+        .slice(prev, next)
+        .map((character) => (
           <Card character={character} key={character.name} />
         ))}
       </ul>
